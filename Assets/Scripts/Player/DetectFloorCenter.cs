@@ -11,7 +11,8 @@ public class DetectFloorCenter : MonoBehaviour
         Debug.Log(collision.transform.localPosition);
         
         
-        floorPosition = collision.transform.localPosition;
+        //floorPosition = collision.transform.localPosition;
+        floorPosition = new Vector3(collision.transform.position.x, transform.position.y, collision.transform.position.z);
         var distancia=transform.localPosition - floorPosition;
         float magnitudDistancia=distancia.magnitude;
         
