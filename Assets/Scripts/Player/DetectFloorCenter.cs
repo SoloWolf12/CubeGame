@@ -6,21 +6,22 @@ public class DetectFloorCenter : MonoBehaviour
 {
     public Vector3 floorPosition;
     [SerializeField] private float speed;
-    private void OnCollisionEnter(Collision collision)
+    [SerializeField] MainMovement mainMovementScript;
+
+    
+    private void OnCollisionStay(Collision collision)
     {
-        //Debug.Log(collision.transform.localPosition);
-        
-        
+        //Debug.Log(collision.transform.localPosition);        
         //floorPosition = collision.transform.localPosition;
         floorPosition = new Vector3(collision.transform.position.x, transform.position.y, collision.transform.position.z);
         var distancia=transform.localPosition - floorPosition;
         float magnitudDistancia=distancia.magnitude;
         
-        if (magnitudDistancia <= 0.01)
+        if (magnitudDistancia <= 0.01 && !mainMovementScript.isMoving)
         {
             transform.position = floorPosition;
         }
-        if (floorPosition != transform.position)
+        if (floorPosition != transform.position && !mainMovementScript.isMoving)
         {
             // transform.position = floorPosition;
 
