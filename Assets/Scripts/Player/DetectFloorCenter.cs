@@ -8,7 +8,7 @@ public class DetectFloorCenter : MonoBehaviour
     [SerializeField] private float speed;
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.transform.localPosition);
+        //Debug.Log(collision.transform.localPosition);
         
         
         //floorPosition = collision.transform.localPosition;

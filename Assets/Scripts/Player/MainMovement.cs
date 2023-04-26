@@ -10,9 +10,10 @@ public class MainMovement : MonoBehaviour
     [SerializeField] private KeyCode backwardKey;
     [SerializeField] private KeyCode leftKey;
     [SerializeField] private KeyCode rightKey;
-    [SerializeField] private float speed;
-    [SerializeField] private float travelTime;
+    [SerializeField] [Tooltip("9")] public float speed;
+    [SerializeField] [Tooltip("0.2")] public float travelTime;
     private bool isMoving = false;
+    [SerializeField] Rotate rotateCubeScript;
 
     void Update()
     {
@@ -23,18 +24,23 @@ public class MainMovement : MonoBehaviour
         if(Input.GetKeyDown(fowardKey) && !isMoving) 
         {
             StartCoroutine(MoveOverTime(Vector3.forward, travelTime));
-        }
+            StartCoroutine(rotateCubeScript.RotateObject(90f, Vector3.right));
+
+        }   
         if (Input.GetKeyDown(backwardKey) && !isMoving)
         {
             StartCoroutine(MoveOverTime(Vector3.back, travelTime));
+            StartCoroutine(rotateCubeScript.RotateObject(90f, Vector3.left));
         }
         if (Input.GetKeyDown(leftKey) && !isMoving)
         {
             StartCoroutine(MoveOverTime(Vector3.left, travelTime));
+            StartCoroutine(rotateCubeScript.RotateObject(90f, Vector3.forward));
         }
         if (Input.GetKeyDown(rightKey) && !isMoving)
         {
             StartCoroutine(MoveOverTime(Vector3.right, travelTime));
+            StartCoroutine(rotateCubeScript.RotateObject(90f, Vector3.back));
         }
     }
     private IEnumerator MoveOverTime(Vector3 direction, float duration)
