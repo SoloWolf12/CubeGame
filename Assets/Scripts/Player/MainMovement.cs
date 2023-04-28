@@ -65,7 +65,7 @@ using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 public class MainMovement : MonoBehaviour
 {
-    [SerializeField] private KeyCode fowardKey;
+    [SerializeField] private KeyCode forward;
     [SerializeField] private KeyCode backwardKey;
     [SerializeField] private KeyCode leftKey;
     [SerializeField] private KeyCode rightKey;
@@ -73,6 +73,11 @@ public class MainMovement : MonoBehaviour
     [SerializeField][Tooltip("0.2")] public float travelTime;
     public bool isMoving = false;
     [SerializeField] Rotate rotateCubeScript;
+    [SerializeField] CanGoforwards canGoforwardsScript;
+    [SerializeField] CanGoBackward canGoBackwardsScript;
+    [SerializeField] CanGoRight canGoRightScript;
+    [SerializeField] CanGoLeft canGoLeftScript;
+    
     void Update()
     {
         CheckInputs();
@@ -129,26 +134,54 @@ public class MainMovement : MonoBehaviour
     }
     public void CheckInputs()
     {
-        if (Input.GetKeyDown(fowardKey) && !isMoving)
+        if (Input.GetKeyDown(forward) && !isMoving )
         {
-            StartCoroutine(MoveOverTime(Vector3.forward, travelTime));
-            StartCoroutine(rotateCubeScript.RotateObject(90f, WhatIsRight()));
 
+            if (canGoforwardsScript.CanMove() == false)
+            {
+                Debug.Log("No puedes avanzar");
+            }
+            else
+            {
+                StartCoroutine(MoveOverTime(Vector3.forward, travelTime));
+                StartCoroutine(rotateCubeScript.RotateObject(90f, WhatIsRight()));
+            }
         }
         if (Input.GetKeyDown(backwardKey) && !isMoving)
         {
-            StartCoroutine(MoveOverTime(Vector3.back, travelTime));
-            StartCoroutine(rotateCubeScript.RotateObject(90f, -WhatIsRight()));
+            if (canGoBackwardsScript.CanMove() == false)
+            {
+                Debug.Log("No puedes avanzar");
+            }
+            else
+            {
+                StartCoroutine(MoveOverTime(Vector3.back, travelTime));
+                StartCoroutine(rotateCubeScript.RotateObject(90f, -WhatIsRight()));
+            }
         }
         if (Input.GetKeyDown(leftKey) && !isMoving)
         {
-            StartCoroutine(MoveOverTime(Vector3.left, travelTime));
-            StartCoroutine(rotateCubeScript.RotateObject(90f, WhatIsForward()));
+            if (canGoLeftScript.CanMove() == false)
+            {
+                Debug.Log("No puedes avanzar");
+            }
+            else
+            {
+                StartCoroutine(MoveOverTime(Vector3.left, travelTime));
+                StartCoroutine(rotateCubeScript.RotateObject(90f, WhatIsForward()));
+            }
         }
         if (Input.GetKeyDown(rightKey) && !isMoving)
         {
-            StartCoroutine(MoveOverTime(Vector3.right, travelTime));
-            StartCoroutine(rotateCubeScript.RotateObject(90f, -WhatIsForward()));
+            if (canGoRightScript.CanMove() == false)
+            {
+                Debug.Log("No puedes avanzar");
+            }
+            else
+            {
+                StartCoroutine(MoveOverTime(Vector3.right, travelTime));
+                StartCoroutine(rotateCubeScript.RotateObject(90f, -WhatIsForward()));
+            }
         }
     }
     private IEnumerator MoveOverTime(Vector3 direction, float duration)
